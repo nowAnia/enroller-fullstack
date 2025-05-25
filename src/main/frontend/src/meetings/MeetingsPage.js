@@ -7,6 +7,7 @@ export default function MeetingsPage({username}) {
     const [addingNewMeeting, setAddingNewMeeting] = useState(false);
 
 
+
     useEffect(() => {
         const fetchMeetings = async () => {
             const response = await fetch(`/api/meetings`);
@@ -15,7 +16,6 @@ export default function MeetingsPage({username}) {
                 setMeetings(meetings);
             }
         };
-
 
         fetchMeetings();
 
@@ -45,8 +45,20 @@ export default function MeetingsPage({username}) {
             setMeetings(nextMeetings);
         }
 
-
     }
+
+    async function handleJoinMeeting(meeting) {
+        const response = await fetch(`/api/meetings/${meeting.id}/participants`, {
+            method: 'POST',
+            body: JSON.stringify({login : username}),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.ok){
+
+        }
+    }
+
+
 
     return (
         <div>
@@ -58,7 +70,7 @@ export default function MeetingsPage({username}) {
             }
             {meetings.length > 0 &&
                 <MeetingsList meetings={meetings} username={username}
-                              onDelete={handleDeleteMeeting}/>}
+                              onDelete={handleDeleteMeeting} onJoin={handleJoinMeeting}/>}
 
         </div>
     )
