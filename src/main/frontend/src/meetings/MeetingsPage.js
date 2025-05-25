@@ -58,6 +58,17 @@ export default function MeetingsPage({username}) {
         }
     }
 
+    async function handleUnJoinMeeting(meeting) {
+        const response = await fetch(`/api/meetings/${meeting.id}/participants`, {
+            method: 'DELETE',
+            body: JSON.stringify({login : username}),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (response.ok){
+            console.log("deleted")
+        }
+    }
+
 
 
     return (
@@ -70,7 +81,7 @@ export default function MeetingsPage({username}) {
             }
             {meetings.length > 0 &&
                 <MeetingsList meetings={meetings} username={username}
-                              onDelete={handleDeleteMeeting} onJoin={handleJoinMeeting}/>}
+                              onDelete={handleDeleteMeeting} onJoin={handleJoinMeeting} onUnJoin={handleUnJoinMeeting}/>}
 
         </div>
     )

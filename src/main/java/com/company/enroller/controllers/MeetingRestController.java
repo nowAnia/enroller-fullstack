@@ -94,4 +94,22 @@ public class MeetingRestController {
         return new ResponseEntity<Participant>(participant, HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/{id}/participants", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteParticipantFromMeeting(@PathVariable("id") Long id,@RequestBody Participant participant) {
+        Meeting meeting = meetingService.findById(id);
+        if (meeting == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        Participant foundParticipant = participantService.findByLogin(participant.getLogin());
+        if (foundParticipant == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        meeting.removeParticipant(foundParticipant);
+        meetingService.update(meeting);
+        return new ResponseEntity<Participant>(participant, HttpStatus.OK);
+    }
+
+
 }

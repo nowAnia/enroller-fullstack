@@ -1,4 +1,4 @@
-export default function MeetingsList({meetings,username, onDelete, onJoin}) {
+export default function MeetingsList({meetings,username, onDelete, onJoin, onUnJoin}) {
     return (
         <table>
             <thead>
@@ -18,7 +18,7 @@ export default function MeetingsList({meetings,username, onDelete, onJoin}) {
                     <td>{meeting.description}</td>
                     <td><button type="button" onClick={() => onDelete(meeting)}>Usuń</button></td>
                     <td><button type="button" onClick={() => onJoin(meeting)}>Dołącz</button></td>
-                    <td><button type="button" onClick={() => onDelete(meeting)}>Odłącz</button></td>
+                    <td><button type="button" onClick={() => onUnJoin(meeting)}>Odłącz</button></td>
                 </tr>)
             }
             </tbody>
