@@ -52,8 +52,13 @@ public class MeetingRestController {
         if (meeting == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        meetingService.delete(meeting);
-        return new ResponseEntity<Meeting>(meeting, HttpStatus.NO_CONTENT);
+        if (meeting.getParticipants().isEmpty()) {
+            meetingService.delete(meeting);
+            return new ResponseEntity<Meeting>(meeting, HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<Meeting>(meeting, HttpStatus.CONFLICT);
+        }
+
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)

@@ -43,6 +43,8 @@ export default function MeetingsPage({username}) {
         if (response.ok){
             const nextMeetings = meetings.filter(m => m !== meeting);
             setMeetings(nextMeetings);
+        } else {
+            console.log("Can not delete meeting, there are still participants there")
         }
 
     }
