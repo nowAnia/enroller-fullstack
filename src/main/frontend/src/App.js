@@ -1,11 +1,12 @@
 import "milligram";
 import './App.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import LoginForm from "./LoginForm";
 import UserPanel from "./UserPanel";
 
 function App() {
     const [loggedIn, setLoggedIn] = useState('');
+    const [loading, setLoading] = useState(true);
 
     function login(email) {
         if (email) {
@@ -15,6 +16,22 @@ function App() {
 
     function logout() {
         setLoggedIn('');
+    }
+
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
+
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div className="lds-dual-ring"></div>
+            </div>
+        );
     }
 
     return (
